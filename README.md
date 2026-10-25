@@ -59,7 +59,7 @@ To update assets, replace files under `public/media` with the newly approved ori
 ## Deploy to Vercel
 
 1. Commit the project and `package-lock.json` to the separate GitHub repository `jrdexterinc/media-cielle-candles`. Do not commit `node_modules`, `out`, `.next`, credentials, or `.vercel`.
-2. In Vercel, create a **new project** importing that repository. Select Next.js, use Node.js 24 LTS, and keep the repository root as the project root. `vercel.json` supplies the `npm run build` command and `out` output directory. The lockfile supports reproducible installation.
+2. In Vercel, create a **new project** importing that repository. Select Next.js, use Node.js 24 LTS, and keep the repository root as the project root. `vercel.json` supplies the `npm run build` command. Leave **Output Directory** at the framework default (turn off its override); do not set it to `out`. Vercel's Next.js integration reads the build metadata in `.next` and handles the static export automatically. The lockfile supports reproducible installation.
 3. Review the preview deployment on desktop and mobile. Verify email/social links, PDF/PNG/TXT/ZIP downloads, and the supplied social preview image. Vercel preview deployments have platform indexing protection; confirm its current settings before sharing drafts.
 4. In this new project's domain settings, add **media.ciellecandles.com**. Use the exact DNS record Vercel supplies for that subdomain.
 5. Do not change the apex domain, `www`, storefront DNS records, or existing storefront Vercel project. No changes to the storefront are needed.
@@ -68,5 +68,7 @@ To update assets, replace files under `public/media` with the newly approved ori
 If deploying to a different permanent domain, update metadata, robots, sitemap, and the corresponding test assertions. Keep the approved source artwork intact; request a revised social image from the brand if the domain printed in it changes.
 
 ## Validation and deployment status
+
+If Vercel reports `NEXT_NO_ROUTES_MANIFEST` referencing `out/routes-manifest.json`, open **Settings → Build and Deployment → Output Directory**, disable the `out` override, and redeploy the latest commit. Keep the framework preset as Next.js. The local `out/` static export remains available for testing and other static hosts; it is not the Next.js build metadata directory.
 
 The local production build, TypeScript checks, and all seven browser tests passed. The exact Facebook page URL was supplied by the brand owner. Vercel deployment and DNS configuration are separate publication steps and have not been performed.
